@@ -1,0 +1,62 @@
+/* Basic styles for both quiz pages */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 2.5em;
+    color: #2c3e50;
+}
+
+h3 {
+    font-size: 1.3em;
+    margin-top: 20px;
+}
+
+form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+input[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+input[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+br {
+    margin-bottom: 10px;
+}
+
+/* Optional: Style for the results page */
+.results {
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 30px;
+    font-weight: bold;
+}

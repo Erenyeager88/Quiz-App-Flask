@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MDCAT Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <script>
+        function validateForm(event) {
+            const questions = document.querySelectorAll('fieldset');
+            for (let i = 0; i < questions.length; i++) {
+                const options = questions[i].querySelectorAll('input[type="radio"]');
+                const isChecked = Array.from(options).some(option => option.checked);
+                if (!isChecked) {
+                    alert(`Please select an answer for question ${i + 1}`);
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+    <Style>
+        body{
+            background-color: rgb(36, 33, 33);
+        }
+        h1{
+            color: rgb(241, 241, 241);
+        }
+        form{
+            background-color: #40E0D0;
+        }
+        form,text{
+            color: rgb(14, 0, 0);
+        }
+    </Style>
+</head>
+<body>
+    <h1>MDCAT Quiz</h1>
+
+    <form action="/submitquiz" method="post" onsubmit="return validateForm(event)">
+        {% for question in questions_list %}
+            <fieldset>
+                <legend>{{ loop.index }}. {{ question.question }}</legend>
+                <label>
+                    <input type="radio" name="option_{{ question.q_id }}" value="{{ question.option1 }}">
+                    {{ question.option1 }}
+                </label><br>
+                <label>
+                    <input type="radio" name="option_{{ question.q_id }}" value="{{ question.option2 }}">
+                    {{ question.option2 }}
+                </label><br>
+                <label>
+                    <input type="radio" name="option_{{ question.q_id }}" value="{{ question.option3 }}">
+                    {{ question.option3 }}
+                </label>
+            </fieldset>
+        {% endfor %}
+
+        <br><br>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+</body>
+</html>

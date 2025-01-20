@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Successful</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(36, 33, 33);
+            color: #f9f9f9;
+        }
+         a:visited {
+            text-decoration: none;
+            color:#40E0D0 ;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff9800;
+        }
+
+        .success-message {
+            max-width: 600px;
+            margin: 5rem auto;
+            padding: 2rem;
+            background-color: #444;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .success-message h1 {
+            font-size: 2.5rem;
+            color: #40e0d0;
+            margin-bottom: 1rem;
+        }
+
+        .success-message p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #ddd;
+        }
+
+        .success-message a {
+            color: #1b2144;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .success-message a:hover {
+            color: #b0da3e;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #d1d3d6;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: 5px;
+            margin-top: 1.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-links {
+                margin-top: 1rem;
+            }
+
+            .success-message {
+                margin: 2rem 1rem;
+                padding: 1.5rem;
+            }
+        }
+       
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">PrepWizard Hub</div>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}" class="active">Home</a>
+            <a href="{{ url_for('about_us') }}">About</a>
+            <a href="{{ url_for('contact_us') }}">Contact</a>
+        </div>
+        <div>
+            {% if session.get('username') %}
+                <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="success-message">
+        <h1>Welcome, {{ username }}!</h1>
+        <p>Thank you for registering with us.</p>
+        <p>Your email: {{ email }}</p>
+        <p>Selected Test: {{ test_choice }}</p>
+        <p>You can now <a href="/login">log in</a> and start your journey.</p>
+        <a href="/login" class="btn">Log In</a>
+    </main>
+</body>
+</html>

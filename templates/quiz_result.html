@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <style>
+        /* Reset some styles */
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color :rgb(36, 33, 33) ;
+            color: #1d1b1b;
+            padding: 20px;
+        }
+
+       /* Profile Icon Button */
+.login-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-icon {
+  width: 38px;
+  height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+
+}
+
+.profile-icon:hover {
+    opacity: 0.8;
+}
+
+/* Hamburger Icon */
+.hamburger {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+}
+/* Dropdown Menu */
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    background-color: #333;
+    padding: 10px 0;
+    width: 150px;
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.dropdown li {
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+}
+
+.dropdown li a {
+    color: white;
+    font-size: 16px;
+}
+
+.dropdown li a:hover {
+    background-color: #555;
+}
+
+.login-dropdown:hover .dropdown {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+/* Responsive Navbar */
+
+
+/* Show hamburger icon on small screens */
+@media screen and (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+    .nav-links {
+        display: none; /* Hide the nav links by default */
+        width: 100%;
+        text-align: center;
+    }
+    .nav-links.active {
+        display: block; /* Show nav links when 'active' class is added */
+    }
+    .navbar a {
+    padding-right: 50px;
+}
+}
+
+    /* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.navbar a {
+    color: #40E0D0;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin: 0 1rem;
+    transition: color 0.3s ease;
+    padding-right: 100px;
+}
+
+.navbar a:hover {
+    color: #f1b25a;
+}
+
+        /* Main Container */
+        .container {
+            margin-top: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+            background-color:#f1b25a ;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        /* Score and Review Section */
+        .score-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #f1b25a;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .score-section p {
+            font-size: 20px;
+        }
+
+        .review-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #40E0D0   ;
+            color:#333 ;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .review-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Review Section */
+        .review-section {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .review-section ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .review-section li {
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-section p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background-color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Quiz Results</h1>
+        
+        <!-- Score Section -->
+        <div class="score-section">
+            <p><strong>Username:</strong> {{ username }}</p>
+            <p><strong>Email:</strong> {{ email }}</p>
+            <p><strong>Score:</strong> {{ correct_count }} / {{ total_questions }} ({{ (correct_count / total_questions) * 100 }}%)</p>
+        </div>
+
+        <!-- Show Question Review Button -->
+        <button class="review-btn" onclick="toggleReview()">Review Your Answers</button>
+
+        <!-- Question Review Section -->
+        <div class="review-section" id="reviewSection">
+            <h2>Question Review</h2>
+            <ul>
+                {% for result in results %}
+                <li>
+                    <p><strong>Question:</strong> {{ result.question }}</p>
+                    <p><strong>Your Answer:</strong> {{ result.selected }}</p>
+                    <p><strong>Correct Answer:</strong> {{ result.correct }}</p>
+                    <p><strong>Result:</strong> {{ "Correct" if result.is_correct else "Incorrect" }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Back to Home Button -->
+        <a href="/" class="back-btn">Back to Home</a>
+    </div>
+
+    <!-- JavaScript for toggling the review section -->
+    <script>
+        function toggleReview() {
+            var reviewSection = document.getElementById("reviewSection");
+            reviewSection.style.display = reviewSection.style.display === "none" || reviewSection.style.display === "" ? "block" : "none";
+        }
+    </script>
+</body>
+</html>

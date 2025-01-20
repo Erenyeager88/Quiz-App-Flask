@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title -->
+    <title>Contact Form</title>
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}">
+    <style>
+        /* Navbar Styles */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #222;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        a:visited {
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo a {
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            color: orange;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-grow: 1;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: orange;
+            color: white;
+        }
+
+        .logout-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .logout-link:hover {
+            background-color: orange;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-links {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="logo" data-aos="fade-down"><a href="#">PrepWizard Hub</a></div>
+        <div class="nav-links" data-aos="fade-up">
+            <a href="{{ url_for('home') }}" class="active">Home</a>
+            <a href="{{ url_for('about_us') }}">About</a>
+            <a href="{{ url_for('contact_us') }}">Contact</a>
+        </div>
+        <div>
+            {% if session.get('username') %}
+            <!-- If Logged In, Show Logout Link -->
+            <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+            {% else %}
+            <!-- If Not Logged In, Show Login/Register Dropdown -->
+            <div class="login-dropdown">
+                <a href="#" class="login-btn">
+                    <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile Icon"
+                        class="profile-icon">
+                </a>
+                <ul class="dropdown">
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main container -->
+    <div class="container">
+        <h1>Get in Touch</h1>
+        <p>Fill up the form to get in touch with us. </p>
+
+        <!-- Contact form section -->
+        <div class="contact-box">
+            <!-- Left side of the form -->
+            <div class="container-left">
+                <h3>Fill the Form*</h3>
+                <!-- Form -->
+                <form id="contactForm" onsubmit="return validateForm()">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Name*</label>
+                            <input type="text" id="name" placeholder="Enter your Name" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Phone*</label>
+                            <input type="text" id="phone" placeholder="+92 1234567890" required>
+                        </div>
+                    </div>
+
+                    <!-- Input row for Email and Subject -->
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Email*</label>
+                            <input type="email" id="email" placeholder="youremail@gmail.com" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Subject</label>
+                            <input type="text" id="subject" placeholder="Inquiry">
+                        </div>
+                    </div>
+
+                    <!-- Label for Message textarea -->
+                    <label>Message*</label>
+                    <textarea rows="10" id="message" placeholder="Enter your Message" required></textarea>
+                    <button type="submit">SEND MESSAGE</button>
+                </form>
+            </div>
+            <!-- Right side with contact information -->
+            <div class="container-right">
+                <h3>Reach Us</h3>
+                <!-- Table for contact information -->
+                <table>
+                    <tr>
+                        <td>Email: </td>
+                        <td>contact@ssuet.com</td>
+                    </tr>
+
+                    <tr>
+                        <td>Phone: </td>
+                        <td>000111000100</td>
+                    </tr>
+
+                    <tr>
+                        <td>Address: </td>
+                        <td>SSUET Campus <br>
+                            Gulshan-e-Iqbal <br>
+                            Karachi Pakistan</td>
+                    </tr>
+                </table>
+
+                <!-- Map section -->
+                <div class="map">
+                    <!-- Google Map iframe -->
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1809.2421198920326!2d67.09133042380371!3d24.91556846447829!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33f32a0f2c3f3%3A0x4fc0a6fd386117f0!2sSir%20Syed%20University%20of%20Engineering%20and%20Technology!5e0!3m2!1sen!2s!4v1736704738288!5m2!1sen!2s"
+                        width="800" height="275" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript file -->
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+
+</html>

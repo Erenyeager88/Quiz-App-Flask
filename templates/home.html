@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certification Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito Sans', sans-serif;
+      color: #ffffff;
+      /* Prevent horizontal scroll caused by diagonal images */
+      position: relative;
+    }
+
+    a:visited {
+      color: white;
+    }
+
+    /* Profile Icon Button */
+    .login-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .profile-icon {
+      width: 38px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+
+    }
+
+    .profile-icon:hover {
+      opacity: 0.8;
+    }
+
+    /* Hamburger Icon */
+    .hamburger {
+      display: none;
+      font-size: 30px;
+      cursor: pointer;
+      color: white;
+    }
+
+    /* Dropdown Menu */
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      background-color: #333;
+      padding: 10px 0;
+      width: 150px;
+      border-radius: 5px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .dropdown li {
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      list-style: none;
+    }
+
+    .dropdown li a {
+      color: white;
+      font-size: 16px;
+    }
+
+    .dropdown li a:hover {
+      background-color: #555;
+    }
+
+    .login-dropdown:hover .dropdown {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Responsive Navbar */
+
+
+    /* Show hamburger icon on small screens */
+    @media screen and (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        /* Hide the nav links by default */
+        width: 100%;
+        text-align: center;
+      }
+
+      .nav-links.active {
+        display: block;
+        /* Show nav links when 'active' class is added */
+      }
+
+      .navbar a {
+        padding-right: 50px;
+      }
+    }
+
+    /* Background wrapper */
+    .background-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      /* Ensure no overflow from diagonal images */
+    }
+
+    /* First diagonal background image */
+
+    .background-image-1 {
+      /* First diagonal background image */
+      position: fixed;
+      /* Fixed to stay consistent across resolutions */
+      top: 38%;
+      left: 42%;
+      width: 100vw;
+      height: 83vh;
+      /* Extra height for full diagonal fill */
+      background-image: url("{{ url_for('static', filename='images/bg-pix.gif') }}");
+      /* Flask static path */
+      background-repeat: no-repeat;
+      /* Prevent repeating */
+      background-position: center;
+      /* Center the image */
+      background-size: cover;
+      /* Maintain aspect ratio */
+      transform: rotate(-45deg);
+      /* Diagonal orientation */
+      clip-path: polygon(0 0, 100% 0, 100% 50%, 0 100%);
+      opacity: 1;
+      /* Adjust transparency */
+    }
+
+    .background-image-2 {
+      position: absolute;
+      object-fit: contain;
+      top: -51%;
+      left: -64%;
+      width: 166%;
+      height: 150%;
+      background-image: url("{{ url_for('static', filename='images/pic.jpg') }}");
+      /* Flask static path */
+      background-repeat: no-repeat;
+      /* Prevent repeating */
+      background-position: center;
+      /* Center the image */
+      background-size: cover;
+      /* Maintain aspect ratio */
+      transform: rotate(-45deg);
+      clip-path: polygon(0 50%, 100% 0, 100% 100%, 0 100%);
+      animation: slideshow 20s infinite;
+
+    }
+
+    /* Slideshow keyframes */
+    /* @keyframes slideshow {
+  0% { 
+    background-image: url('{{ url_for('static', filename='images/bg-pix-2.jpg') }}');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  33% { 
+    background-image: url('{{ url_for('static', filename='images/bg-pix-3.jpg') }}');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  66% { 
+    background-image: url('{{ url_for('static', filename='images/bg-pix-4.jpg') }}');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  100% { 
+    background-image: url('{{ url_for('static', filename='images/bg-pix-5.jpg') }}');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+} */
+
+    .active {
+      color: #F29136 !important;
+    }
+
+    /* Navbar Styling */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .navbar a {
+      color: #40E0D0;
+      text-decoration: none;
+      font-size: 1.2rem;
+      margin: 0 1rem;
+      transition: color 0.3s ease;
+      padding-right: 100px;
+    }
+
+    .navbar a:hover {
+      color: #f1b25a;
+    }
+
+    .container {
+      text-align: start;
+      padding: 8% 5%;
+    }
+
+    .tagline {
+      font-size: 7rem;
+      margin-bottom: 1rem;
+      color: #40E0D0;
+      font-weight: 400;
+      font-style: normal;
+      animation: slideIn 2s ease-in-out;
+    }
+
+    .subtitle {
+      font-size: 2rem;
+      margin-bottom: 10rem;
+      color: #40E0D0;
+      padding-left: 10px;
+      animation: fadeIn 2.5s ease-in-out;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 10rem;
+      flex-wrap: wrap;
+      animation: fadeInUp 3s ease-in-out;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      overflow: hidden;
+      width: 570px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: #ffffff;
+      cursor: pointer;
+      position: relative;
+   
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.5);
+    }
+
+    .card img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      font-size: 2rem;
+      margin: 1rem 0 0.5rem;
+      margin-top: 30px;
+      color: #f1b25a;
+    }
+
+    .card p {
+      font-size: 1.2rem;
+      color: #f1b25a;
+      padding: 0 1rem;
+      margin-bottom: 20px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .cards {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Background Wrapper -->
+  <div class="background-wrapper">
+    <div class="background-image-1"></div>
+    <div class="background-image-2"></div>
+  </div>
+
+  <!-- Main Content -->
+  <nav class="navbar">
+    <div class="logo" data-aos="fade-down"><a href="#">PrepWizard Hub</a></div>
+    <div class="nav-links" data-aos="fade-up">
+      <a href="{{ url_for('home') }}" class="active">Home</a>
+      <a href="{{ url_for('about_us') }}">About</a>
+      <a href="{{ url_for('contact_us') }}">Contact</a>
+    </div>
+
+    <!-- Profile Icon and Dropdown -->
+    <div>
+      {% if session.get('username') %}
+      <!-- If Logged In, Show Logout Link -->
+      <li><a href="{{ url_for('logout') }}" class="logout-link">Logout</a></li>
+      {% else %}
+      <!-- If Not Logged In, Show Login/Register Dropdown -->
+      <li class="login-dropdown">
+        <a href="#" class="login-btn">
+          <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile Icon" class="profile-icon">
+        </a>
+        <ul class="dropdown">
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('register') }}">Register</a></li>
+        </ul>
+      </li>
+
+      {% endif %}
+    </div>
+    <!-- Hamburger Icon -->
+    <div class="hamburger" onclick="toggleNavbar()">
+      &#9776; <!-- This is the hamburger icon (three horizontal bars) -->
+    </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <p class="tagline" data-aos="fade-right">MEET YOUR FUTURE</p>
+    <p class="subtitle" data-aos="fade-left">
+      Prepare for the certification that opens doors to your dreams.
+    </p>
+    <div class="cards">
+      <a href="{{ url_for('register') }}">
+        <div class="card" data-aos="zoom-in" onclick="location.href='register.html'">
+          <img src="{{ url_for('static', filename='images/card1.jpg') }}" alt="IELTS Certification" />
+          <h3>IELTS Certification</h3>
+          <p>Prepare for your future with the IELTS certification test.</p>
+          <a href="ielts.html"></a>
+        </div>
+      </a>
+
+      <a href="{{ url_for('register') }}">
+        <div class="card" data-aos="zoom-in" data-aos-delay="200" onclick="location.href='register.html'">
+          <img src="{{ url_for('static', filename='images/card2.jpg') }}" alt="MDCAT Certification" />
+          <h3>MDCAT Certification</h3>
+          <p>Begin your medical career with the MDCAT certification.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+  <script>
+    AOS.init({
+      duration: 1200, // Animation duration in ms
+      once: true, // Whether animation should happen only once
+    });
+  </script>
+</body>
+
+</html>

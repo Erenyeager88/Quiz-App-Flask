@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <script>
+        function validateForm(event) {
+            const questions = document.querySelectorAll('fieldset');  // Get all fieldsets (each question group)
+            let allAnswered = true;
+
+            questions.forEach(function(question) {
+                const options = question.querySelectorAll('input[type="radio"]');  // Get all radio buttons for each question
+                const isChecked = Array.from(options).some(option => option.checked);  // Check if any option is selected
+                if (!isChecked) {
+                    allAnswered = false;
+                    question.style.border = '2px solid red';  // Optionally highlight unanswered questions
+                } else {
+                    question.style.border = '';  // Reset border if answered
+                }
+            });
+
+            if (!allAnswered) {
+                alert("Please answer all questions before submitting.");
+                event.preventDefault();  // Prevent form submission if any question is not answered
+            }
+            return allAnswered;  // Return the validation status
+        }
+    </script>
+    <style>
+        body{
+            background-color: rgb(36, 33, 33);
+        }
+        h1{
+            color: rgb(241, 241, 241);
+        }
+        form{
+            background-color: #40E0D0;
+        }
+        form,text{
+            color: rgb(14, 0, 0);
+        }
+    </style>
+</head>
+<body>
+    <h1>IELTS Quiz</h1>
+   
+
+    <!-- Displaying the questions -->
+    <form action="/submitielts" method="post" onsubmit="return validateForm(event)">   
+        {% for question in questions_list2 %}
+            <fieldset>
+                <legend>{{ question.question }}</legend>
+                <label>
+                    <input type="radio" name="option_{{ question.q_id }}" value="{{ question.option1 }}">
+                    {{ question.option1 }}
+                </label><br>
+                <label>
+                    <input type="radio" name="option_{{ question.q_id }}" value="{{ question.option2 }}">
+                    {{ question.option2 }}
+                </label><br>
+                <label>
+                    <input type="radio" name="option_{{ question.q_id }}" value="{{ question.option3 }}">
+                    {{ question.option3 }}
+                </label><br>
+            </fieldset>
+        {% endfor %}
+
+        <br><br>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+</body>
+</html>

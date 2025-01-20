@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Quiz Website</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: rgb(36, 33, 33);
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar Styles */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #222;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: white;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .logo:hover {
+      color: orange;
+      transition: color 0.3s ease;
+    }
+
+    .nav-center {
+      display: flex;
+      justify-content: center;
+      flex-grow: 1;
+      gap: 20px;
+    }
+
+    .nav-center a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-center a:hover {
+      background-color: orange;
+      color: white;
+    }
+
+    .logout {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .logout:hover {
+      background-color: orange;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .nav-center {
+        margin: 10px 0;
+      }
+    }
+
+    /* Page Content */
+    .content-container {
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 40px;
+      background-color: rgb(36, 33, 33);
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+    }
+
+    h2 {
+      font-size: 32px;
+      color: #fffcfc;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #fffafa;
+      text-align: justify;
+    }
+
+    .about-section {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .about-section div {
+      width: 48%;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #f5f5f5;
+    }
+
+    ul, li, text {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <span class="logo">PrepWizard Hub</span>
+    <div class="nav-center">
+      <a href="{{ url_for('home') }}" class="active">Home</a>
+      <a href="{{ url_for('about_us') }}">About</a>
+      <a href="{{ url_for('contact_us') }}">Contact</a>
+    </div>
+    <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="content-container">
+    <h2>About Our Platform</h2>
+    
+    <p>Welcome to **Quiz Website**, the ultimate destination for those preparing for the **MDCAT** and **IELTS** exams. Our platform provides a comprehensive range of quizzes, practice tests, and valuable study materials designed to help you excel in these competitive exams. Whether you're looking to pursue a medical career with **MDCAT** or aiming for higher education opportunities abroad with **IELTS**, we are here to support you every step of the way.</p>
+    
+    <div class="about-section">
+      <div>
+        <p>Our **MDCAT** quizzes are specifically tailored to test your knowledge and prepare you for the challenging **Medical and Dental College Admission Test (MDCAT)**. With practice questions designed to cover all the necessary topics, we aim to make you fully prepared for the exam day. Our interactive quizzes will help you track your progress and work on areas where you need improvement.</p>
+      </div>
+      <div>
+        <p>For students aiming to study abroad or pursue higher education opportunities, our **IELTS** quiz section offers a variety of mock tests and practice questions. These quizzes are designed to simulate the real IELTS exam, giving you a feel of the test format and helping you hone your skills. Whether it's the Listening, Reading, Writing, or Speaking section, we have all areas covered to ensure you're prepared to achieve your desired band score.</p>
+      </div>
+    </div>
+
+    <h2>Why Choose Us?</h2>
+    <p>We are dedicated to providing a seamless and effective learning experience. Here’s why you should choose our platform:</p>
+    <ul>
+      <li><span class="highlight">Comprehensive Resources:</span> A variety of quizzes and study materials tailored to **MDCAT** and **IELTS** exams.</li>
+      <li><span class="highlight">Realistic Mock Tests:</span> Simulated tests that mimic the actual exam format to give you the best preparation possible.</li>
+      <li><span class="highlight">Track Your Progress:</span> Regular progress tracking to ensure you stay on top of your preparation.</li>
+      <li><span class="highlight">Interactive Learning:</span> Engaging quizzes that make learning fun and help you retain information.</li>
+    </ul>
+
+    <h2>Our Mission</h2>
+    <p>Our mission is simple – to help you succeed. By providing high-quality, accurate, and comprehensive quizzes, we aim to make exam preparation easier and more effective for every student. We understand the challenges faced by students preparing for **MDCAT** and **IELTS**, and our goal is to make the process smoother, more manageable, and less stressful.</p>
+  </div>
+
+</body>
+</html>
